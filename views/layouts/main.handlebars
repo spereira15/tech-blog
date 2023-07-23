@@ -20,8 +20,7 @@
         <!-- Conditionally render login or logout links -->
         {{#if logged_in}}
         <a href="/dashboard">Dashboard</a> |
-        <form action="/logout" method="POST" class="no-form-style">
-          <button type="submit">Logout</button>
+        <button id="logout">Logout</button>
         </form>
         {{else}}
         <a href="/login">Login</a> |

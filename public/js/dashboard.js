@@ -1,49 +1,53 @@
-const newFormHandler = async (event) => {
+// Function to handle new blog post submission
+const newBlogPostHandler = async (event) => {
   event.preventDefault();
 
-  const name = document.querySelector('#project-name').value.trim();
-  const needed_funding = document.querySelector('#project-funding').value.trim();
-  const description = document.querySelector('#project-desc').value.trim();
+  // Collect values from the form
+  const title = document.querySelector('#post-title').value.trim();
+  const content = document.querySelector('#post-content').value.trim();
 
-  if (name && needed_funding && description) {
-    const response = await fetch(`/api/projects`, {
+  if (title && content) {
+    // Send a POST request to the create post API endpoint
+    const response = await fetch('/api/posts', {
       method: 'POST',
-      body: JSON.stringify({ name, needed_funding, description }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      body: JSON.stringify({ title, content }),
+      headers: { 'Content-Type': 'application/json' },
     });
 
     if (response.ok) {
-      // If project creation is successful, redirect the browser to the dashboard page
-      document.location.replace('/dashboard');
+      // If post creation is successful, reload the page to display the new post
+      document.location.reload();
     } else {
-      alert('Failed to create project');
+      // Display an alert with the error message if post creation fails
+      const errorMessage = await response.json();
+      alert(errorMessage.message);
     }
   }
 };
 
-const delButtonHandler = async (event) => {
+// Function to handle blog post deletion
+const deleteBlogPostHandler = async (event) => {
   if (event.target.hasAttribute('data-id')) {
-    const id = event.target.getAttribute('data-id');
+    const postId = event.target.getAttribute('data-id');
 
-    const response = await fetch(`/api/projects/${id}`, {
+    // Send a DELETE request to the delete post API endpoint
+    const response = await fetch(`/api/posts/${postId}`, {
       method: 'DELETE',
     });
 
     if (response.ok) {
-      // If project deletion is successful, redirect the browser to the dashboard page
-      document.location.replace('/dashboard');
+      // If post deletion is successful, reload the page to update the list of posts
+      document.location.reload();
     } else {
-      alert('Failed to delete project');
+      // Display an alert with the error message if post deletion fails
+      const errorMessage = await response.json();
+      alert(errorMessage.message);
     }
   }
 };
 
-document
-  .querySelector('.new-project-form')
-  .addEventListener('submit', newFormHandler);
+// Add event listener for new blog post submission
+document.querySelector('.new-blog-post-form').addEventListener('submit', newBlogPostHandler);
 
-document
-  .querySelector('.project-list')
-  .addEventListener('click', delButtonHandler);
+// Add event listener for blog post deletion
+document.querySelector('.blog-post-list').addEventListener('click', deleteBlogPostHandler);
