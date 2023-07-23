@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fund My Project!</title>
+  <title>Tech Blog - Your Source for Tech Insights</title>
   <link rel="stylesheet" href="/css/jass.css">
   <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -13,16 +13,19 @@
   <div class="flex-column justify-space-around">
     <header class="display-flex justify-space-between align-center p-2">
       <h1>
-        <span role="img" aria-label="money">💸</span>
-        <a href="/">Fund My Project!</a>
+        <span role="img" aria-label="tech">🔧</span>
+        <a href="/">Tech Blog</a>
       </h1>
       <nav>
         <!-- Conditionally render login or logout links -->
         {{#if logged_in}}
-        <a href="/profile">profile</a> |
-        <button class="no-button" id="logout">logout</button>
+        <a href="/dashboard">Dashboard</a> |
+        <form action="/logout" method="POST" class="no-form-style">
+          <button type="submit">Logout</button>
+        </form>
         {{else}}
-        <a href="/login">login</a>
+        <a href="/login">Login</a> |
+        <a href="/signup">Signup</a>
         {{/if}}
       </nav>
     </header>
@@ -31,11 +34,11 @@
       {{{ body }}}
     </main>
     <footer>
-      
+      <!-- Add footer content if needed -->
     </footer>
   </div>
 
-  <!-- Render script for logged in users only -->
+  <!-- Render script for logged-in users only -->
   {{#if logged_in}}
   <script src="/js/logout.js"></script>
   {{/if}}
