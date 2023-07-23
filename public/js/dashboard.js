@@ -15,7 +15,8 @@ const newFormHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.replace('/profile');
+      // If project creation is successful, redirect the browser to the dashboard page
+      document.location.replace('/dashboard');
     } else {
       alert('Failed to create project');
     }
@@ -31,7 +32,8 @@ const delButtonHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.replace('/profile');
+      // If project deletion is successful, redirect the browser to the dashboard page
+      document.location.replace('/dashboard');
     } else {
       alert('Failed to delete project');
     }

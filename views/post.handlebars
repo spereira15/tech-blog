@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Include necessary meta tags, stylesheets, and title -->
+</head>
+
+<body>
+  <div class="flex-column justify-space-around">
+    <header>
+      <!-- Include header content -->
+    </header>
+
+    <main class="container container-fluid mt-5">
+      <!-- Blog Post Content -->
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <h2>{{post.title}}</h2>
+          <p>Created by {{post.user.name}} on {{format_date post.date_created}}</p>
+          <p>{{post.content}}</p>
+        </div>
+      </div>
+
+      <!-- Comments Section -->
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <h3>Comments</h3>
+          <!-- Loop through comments to display each one -->
+          {{#each post.comments as |comment|}}
+          <div class="comment">
+            <p>{{comment.text}}</p>
+            <p>Comment by {{comment.user.name}} on {{format_date comment.date_created}}</p>
+          </div>
+          {{/each}}
+
+          <!-- Comment Form -->
+          <form class="form comment-form">
+            <div class="form-group">
+              <label for="comment-text">Leave a comment:</label>
+              <textarea class="form-input" id="comment-text" name="comment-text"></textarea>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <!-- Include footer content -->
+    </footer>
+  </div>
+
+  <!-- Include necessary JavaScript files (e.g., post.js) -->
+  <script src="/js/post.js"></script>
+</body>
+
+</html>

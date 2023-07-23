@@ -5,8 +5,10 @@ const logout = async () => {
   });
 
   if (response.ok) {
+    // If logout is successful, redirect the browser to the homepage
     document.location.replace('/');
   } else {
+    // Display an alert with the error message if logout fails
     alert(response.statusText);
   }
 };
