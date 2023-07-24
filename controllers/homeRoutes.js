@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post, User } = require('../models');
+const { Post, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -27,29 +27,38 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Inside the /post/:id route handler
 router.get('/post/:id', async (req, res) => {
   try {
+    // Get the post data with associated comments
     const postData = await Post.findByPk(req.params.id, {
       include: [
         {
-          model: User,
-          attributes: ['name'],
+          model: Comment,
+          attributes: ['id', 'text', 'date_created', 'user_id'],
+          include: {
+            model: User,
+            attributes: ['name'],
+          },
         },
       ],
     });
 
-    const post = postData.get({ plain: true });
+    // Get the comments data
+    const comments = postData.comments.map(comment => comment.get({ plain: true }));
 
-    console.log(post);
-
+    // Render the post.handlebars template with the post and comments data
     res.render('post', {
-      ...post,
+      ...postData.get({ plain: true }),
+      comments: comments,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+
 
 // Use withAuth middleware to prevent access to route
 router.get('/dashboard', withAuth, async (req, res) => {
