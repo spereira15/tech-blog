@@ -13,8 +13,6 @@ This application is a tech blog that allows users to view, comment, create, dele
 ## Table of Contents
 
 - [Live](#live)
-- [Demonstration](#demonstration)
-- [Usage](#usage)
 - [Contributing](#contributing)
 - [Questions](#questions)
 
