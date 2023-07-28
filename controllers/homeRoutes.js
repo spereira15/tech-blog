@@ -100,4 +100,32 @@ router.get('/signup', (req, res) => {
   res.render('signup');
 });
 
+// Handle GET request to display the edit-post form
+router.get('/edit-post/:id', withAuth, async (req, res) => {
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+      ],
+    });
+
+    if (!postData) {
+      res.status(404).json({ message: 'Post not found' });
+      return;
+    }
+
+    const post = postData.get({ plain: true });
+
+    res.render('edit-post', {
+      ...post,
+      logged_in: true,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

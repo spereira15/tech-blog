@@ -115,4 +115,26 @@ router.delete('/comments/:id', withAuth, async (req, res) => {
   }
 });
 
+// Handle POST request to update a post
+router.post('/update-post/:id', withAuth, async (req, res) => {
+  try {
+    const postData = await Post.update(
+      {
+        title: req.body['post-title'],
+        content: req.body['post-content'],
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+
+    res.redirect('/dashboard');
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 module.exports = router;
